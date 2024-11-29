@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_dummy/card_widget.dart';
+import 'package:todo_dummy/get_all.dart';
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -20,14 +21,19 @@ class _ToDoListState extends State<ToDoList> {
       ),
       body: Container(
         padding: EdgeInsets.all(15),
-        child: const Column(
+        child: Column(
           children: [
             Expanded(
                 child: CardWidget(
-              icon: Icons.folder,
+              svg: 'https://pic.onlinewebfonts.com/thumbnails/icons_563230.svg',
               title: "Get all TODOs",
+              color: Colors.lightBlueAccent,
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => GetAll()));
+              },
             )),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Expanded(
@@ -35,21 +41,30 @@ class _ToDoListState extends State<ToDoList> {
                 children: [
                   Expanded(
                       child: CardWidget(
-                    icon: Icons.highlight,
-                    title: "Get a single ToDos",
-                  )),
-                  SizedBox(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => GetAll()));
+                          },
+                          svg:
+                              'https://pic.onlinewebfonts.com/thumbnails/icons_427403.svg',
+                          title: "Get a single ToDos",
+                          color: Colors.cyanAccent)),
+                  const SizedBox(
                     width: 15,
                   ),
-                  Expanded(
+                  const Expanded(
                       child: CardWidget(
-                    icon: Icons.generating_tokens,
+                    svg:
+                        'https://pic.onlinewebfonts.com/thumbnails/icons_436231.svg',
                     title: "Get a random ToDos",
+                    color: Colors.greenAccent,
                   ))
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Expanded(
@@ -57,38 +72,45 @@ class _ToDoListState extends State<ToDoList> {
                 children: [
                   Expanded(
                       child: CardWidget(
-                    icon: Icons.skip_next,
+                    svg:
+                        'https://pic.onlinewebfonts.com/thumbnails/icons_106515.svg',
                     title: "Limit & Skip ToDos",
+                    color: Colors.lightGreenAccent,
                   )),
                   SizedBox(
                     width: 15,
                   ),
                   Expanded(
                       child: CardWidget(
-                    icon: Icons.add,
+                    svg:
+                        'https://pic.onlinewebfonts.com/thumbnails/icons_548160.svg',
                     title: "Add a ToDos",
+                    color: Colors.amberAccent,
                   ))
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Expanded(
+            const Expanded(
               child: Row(
                 children: [
                   Expanded(
                       child: CardWidget(
-                    icon: Icons.update,
-                    title: "Update a ToDos",
-                  )),
+                          svg:
+                              'https://pic.onlinewebfonts.com/thumbnails/icons_215928.svg',
+                          title: "Update a ToDos",
+                          color: Colors.limeAccent)),
                   SizedBox(
                     width: 15,
                   ),
                   Expanded(
                       child: CardWidget(
-                    icon: Icons.delete,
+                    svg:
+                        'https://pic.onlinewebfonts.com/thumbnails/icons_548170.svg',
                     title: "Delete a ToDos",
+                    color: Colors.white70,
                   ))
                 ],
               ),
