@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_dummy/add_edit.dart';
 import 'package:todo_dummy/card_widget.dart';
 import 'package:todo_dummy/get_all.dart';
 
@@ -14,9 +15,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "To Do List",
-        ),
+        title: const Text("To Do List", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: Container(
@@ -82,6 +81,12 @@ class _ToDoListState extends State<ToDoList> {
                   ),
                   Expanded(
                       child: CardWidget(
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => AddEdit(),
+                      );
+                    },
                     svg:
                         'https://pic.onlinewebfonts.com/thumbnails/icons_548160.svg',
                     title: "Add a ToDos",
@@ -93,11 +98,17 @@ class _ToDoListState extends State<ToDoList> {
             const SizedBox(
               height: 15,
             ),
-            const Expanded(
+            Expanded(
               child: Row(
                 children: [
                   Expanded(
                       child: CardWidget(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => GetAll()));
+                          },
                           svg:
                               'https://pic.onlinewebfonts.com/thumbnails/icons_215928.svg',
                           title: "Update a ToDos",
