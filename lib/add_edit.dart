@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddEdit extends StatelessWidget {
-  const AddEdit({super.key});
+  final String? option;
+  const AddEdit({super.key, this.option});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,14 @@ class AddEdit extends StatelessWidget {
                 child: Container(
                     color: Colors.lightBlueAccent,
                     width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
                     height: 50,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Add & Edit To Do",
+                          option ?? "Add To Do",
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -38,9 +39,12 @@ class AddEdit extends StatelessWidget {
                       ],
                     )),
               ),
-              TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: "Add To Do"),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Add To Do"),
+                ),
               ),
             ],
           ),

@@ -10,24 +10,31 @@ class ToDoList extends StatefulWidget {
   State<ToDoList> createState() => _ToDoListState();
 }
 
+///Home Screen
 class _ToDoListState extends State<ToDoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        ///title of home screen
         title: const Text("To Do List", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
+
+      ///Have 3 Row
       body: Container(
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
+            ///Row 1
+            ///Button Get All ToDos
             Expanded(
                 child: CardWidget(
               svg: 'https://pic.onlinewebfonts.com/thumbnails/icons_563230.svg',
               title: "Get all TODOs",
               color: Colors.lightBlueAccent,
               onPressed: () {
+                //Route To 2nd Screen {Get all Screen}
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => GetAll()));
               },
@@ -35,17 +42,15 @@ class _ToDoListState extends State<ToDoList> {
             const SizedBox(
               height: 15,
             ),
+
+            ///Row 2
             Expanded(
               child: Row(
                 children: [
+                  ///Button Get Single To Do
                   Expanded(
                       child: CardWidget(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => GetAll()));
-                          },
+                          onPressed: () {},
                           svg:
                               'https://pic.onlinewebfonts.com/thumbnails/icons_427403.svg',
                           title: "Get a single ToDos",
@@ -53,6 +58,8 @@ class _ToDoListState extends State<ToDoList> {
                   const SizedBox(
                     width: 15,
                   ),
+
+                  ///Button Random To Do
                   const Expanded(
                       child: CardWidget(
                     svg:
@@ -66,9 +73,12 @@ class _ToDoListState extends State<ToDoList> {
             const SizedBox(
               height: 15,
             ),
+
+            ///Row3
             Expanded(
               child: Row(
                 children: [
+                  ///Button Limit And Skip
                   Expanded(
                       child: CardWidget(
                     svg:
@@ -79,9 +89,12 @@ class _ToDoListState extends State<ToDoList> {
                   SizedBox(
                     width: 15,
                   ),
+
+                  ///Button Add To Do
                   Expanded(
                       child: CardWidget(
                     onPressed: () {
+                      ///show bottom sheet of Add To Do
                       showModalBottomSheet(
                         context: context,
                         builder: (context) => AddEdit(),
@@ -98,34 +111,6 @@ class _ToDoListState extends State<ToDoList> {
             const SizedBox(
               height: 15,
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                      child: CardWidget(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => GetAll()));
-                          },
-                          svg:
-                              'https://pic.onlinewebfonts.com/thumbnails/icons_215928.svg',
-                          title: "Update a ToDos",
-                          color: Colors.limeAccent)),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                      child: CardWidget(
-                    svg:
-                        'https://pic.onlinewebfonts.com/thumbnails/icons_548170.svg',
-                    title: "Delete a ToDos",
-                    color: Colors.white70,
-                  ))
-                ],
-              ),
-            )
           ],
         ),
       ),

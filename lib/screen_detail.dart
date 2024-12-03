@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todo_dummy/add_edit.dart';
-import 'package:todo_dummy/detail.dart';
+//import 'package:todo_dummy/add_edit.dart';
 
 class ScreenDetail extends StatelessWidget {
-  const ScreenDetail({super.key});
+  final String? todo;
+  final String? status;
+  const ScreenDetail({super.key, this.todo, this.status});
 
+  ///Screen Detail To Do
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,21 +22,36 @@ class ScreenDetail extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                "Get Up",
+                todo ?? "Get Up",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            Detail(
-              icon: Icons.description,
-              title: ("Get up and drink 1 glass of water"),
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Icon(Icons.description),
+                  Text(todo ?? "Get up and drink 1 glass of water"),
+                ],
+              ),
             ),
-            Detail(
-              icon: Icons.timer,
-              title: "6:00am",
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Icon(Icons.timer),
+                  Text(todo ?? "6:00am"),
+                ],
+              ),
             ),
-            Detail(
-              icon: Icons.done,
-              title: "Completed",
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Icon(Icons.done),
+                  Text(status ?? "Completed"),
+                ],
+              ),
             ),
           ],
         ),

@@ -18,13 +18,15 @@ class CardWidget extends StatelessWidget {
     this.onPressed,
   });
 
+  ///Reusable Widget
+  ///Use by Home Screen
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         width: double.infinity,
-        height: height ?? 140,
+        height: height ?? 200,
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: (color ?? Colors.blue).withOpacity(0.6),
@@ -37,13 +39,15 @@ class CardWidget extends StatelessWidget {
                   offset: Offset(2, 2))
             ]),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SvgPicture.network(
               svg ?? 'https://www.svgrepo.com/show/374674/folder.svg',
               //color: Colors.white,
               height: 50,
             ),
+
+            ///title of button
             Text(
               title ?? "",
               textAlign: TextAlign.center,
