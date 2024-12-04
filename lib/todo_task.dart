@@ -42,101 +42,113 @@ class TodoTask extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.all(5),
+        margin: const EdgeInsets.fromLTRB(10, 7, 10, 7),
+        padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
         width: double.infinity,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black12,
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: Offset(1, 3))
+            ],
+            // border: Border.fromBorderSide(BorderSide(
+            //     style: BorderStyle.solid, color: Colors.grey, width: 1)),
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(10), bottom: Radius.circular(10))),
+        child: Column(
           children: [
-            ///title of todo
-            Expanded(
-              child: Text(
-                todo ?? "Get up",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ),
-
-            ///check box of todo
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Checkbox(
-                  tristate: true,
-                  value: value,
-                  onChanged: onChanged,
-                  checkColor: (Colors.white),
-                  activeColor: color.withOpacity(0.4),
-                  side: BorderSide(width: 2, color: Colors.white),
+                Container(
+                  width: 5,
+                  color: Colors.lightBlueAccent,
                 ),
 
-                ///menu item {update,delete}
-                MenuAnchor(
-                  builder: (BuildContext context, MenuController controller,
-                      Widget? child) {
-                    return IconButton(
-                      onPressed: () {
-                        if (controller.isOpen) {
-                          controller.close();
-                        } else {
-                          controller.open();
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: Colors.white,
-                      ),
-                      tooltip: 'Show menu',
-                    );
-                  },
+                ///title of todo
+                Expanded(
+                  child: Text(
+                    todo ?? "Get up",
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w300),
+                  ),
+                ),
 
-                  ///List of menu
-                  menuChildren: [
-                    ///Update To Do
-                    MenuItemButton(
-                      leadingIcon: Icon(Icons.update),
-                      child: Text(
-                        "Update",
-                        selectionColor: Colors.lightBlueAccent,
-                      ),
-                      onPressed: () {
-                        ///showing Bottom Sheet of Update To Do
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => AddEdit(
-                            option: "Edit To Do",
-                          ),
-                        );
-                      },
+                ///check box of todo
+                Row(
+                  children: [
+                    Checkbox(
+                      tristate: true,
+                      value: value,
+                      onChanged: onChanged,
+                      checkColor: (Colors.black),
+                      activeColor: Colors.grey[300],
+                      side: const BorderSide(width: 2, color: Colors.black),
                     ),
 
-                    ///Delete To Do
-                    MenuItemButton(
-                      leadingIcon: Icon(Icons.delete),
-                      child: Text(
-                        "Delete",
-                        selectionColor: Colors.lightBlueAccent,
-                      ),
-
-                      ///Showing dialog box
-                      onPressed: () {
-                        dialog(context);
+                    ///menu item {update,delete}
+                    MenuAnchor(
+                      builder: (BuildContext context, MenuController controller,
+                          Widget? child) {
+                        return IconButton(
+                          onPressed: () {
+                            if (controller.isOpen) {
+                              controller.close();
+                            } else {
+                              controller.open();
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: Colors.black,
+                          ),
+                          tooltip: 'Show menu',
+                        );
                       },
-                    )
+
+                      ///List of menu
+                      menuChildren: [
+                        ///Update To Do
+                        MenuItemButton(
+                          leadingIcon: const Icon(Icons.update),
+                          child: const Text(
+                            "Update",
+                            selectionColor: Colors.lightBlueAccent,
+                          ),
+                          onPressed: () {
+                            ///showing Bottom Sheet of Update To Do
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => const AddEdit(
+                                option: "Edit To Do",
+                              ),
+                            );
+                          },
+                        ),
+
+                        ///Delete To Do
+                        MenuItemButton(
+                          leadingIcon: const Icon(Icons.delete),
+                          child: const Text(
+                            "Delete",
+                          ),
+
+                          ///Showing dialog box
+                          onPressed: () {
+                            dialog(context);
+                          },
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ],
             ),
           ],
         ),
-        decoration: BoxDecoration(
-            color: color.withOpacity(0.4),
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.grey,
-                  spreadRadius: 1,
-                  blurRadius: 1,
-                  offset: Offset(2, 2))
-            ],
-            borderRadius: BorderRadius.circular(8)),
       ),
     );
   }

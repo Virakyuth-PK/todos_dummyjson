@@ -1,12 +1,12 @@
 class TodoModel {
   final int id;
   final String todo;
-  final bool completed;
+  bool completed;
   final int userId;
   TodoModel({
     required this.id,
     required this.todo,
-    required this.completed,
+    this.completed = false,
     required this.userId,
   });
   factory TodoModel.fromJson(Map<String, dynamic> json) {
