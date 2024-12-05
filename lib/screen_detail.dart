@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 //import 'package:todo_dummy/add_edit.dart';
 
 class ScreenDetail extends StatelessWidget {
-  final String? todo;
-  final String? status;
-  const ScreenDetail({super.key, this.todo, this.status});
+  final String todo;
+  final bool status;
+  const ScreenDetail({
+    super.key,
+    required this.todo,
+    required this.status,
+  });
+  //Icon change by Status{false or true}
+  IconData icons() {
+    return status ? Icons.done : Icons.close;
+  }
 
   ///Screen Detail To Do
   @override
@@ -22,34 +30,22 @@ class ScreenDetail extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                todo ?? "Get Up",
+                "${todo}",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
-              height: 50,
-              child: Row(
-                children: [
-                  Icon(Icons.description),
-                  Text(todo ?? "Get up and drink 1 glass of water"),
-                ],
-              ),
+            SizedBox(
+              height: 20,
             ),
             Container(
               height: 50,
               child: Row(
-                children: [
-                  Icon(Icons.timer),
-                  Text(todo ?? "6:00am"),
-                ],
-              ),
-            ),
-            Container(
-              height: 50,
-              child: Row(
-                children: [
-                  Icon(Icons.done),
-                  Text(status ?? "Completed"),
+                children: <Widget>[
+                  Icon(icons()),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(status ? "Completed" : "Not Completed"),
                 ],
               ),
             ),

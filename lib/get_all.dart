@@ -26,13 +26,13 @@ class _GetAllState extends State<GetAll> {
     final response = await http.get(Uri.parse('https://dummyjson.com/todos'));
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = json.decode(response.body);
-
       List<dynamic> todosList = jsonData['todos'];
       setState(() {
         todos = todosList.map((data) => TodoModel.fromJson(data)).toList();
       });
     } else {
       // Handle error if needed
+      print("Error data fetch");
     }
   }
 
@@ -52,10 +52,13 @@ class _GetAllState extends State<GetAll> {
   }
 
   ///show button sheet of Detail Screen about To Do
-  void detailScreen() {
+  void detailScreen(String todo, bool completed) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => const ScreenDetail(),
+      builder: (context) => ScreenDetail(
+        todo: todo,
+        status: completed,
+      ),
     );
   }
 
@@ -88,7 +91,9 @@ class _GetAllState extends State<GetAll> {
                   return TodoTask(
                     todo: todos[index].todo,
                     value: todos[index].completed,
-                    onPressed: detailScreen,
+                    onPressed: () {
+                      detailScreen(todos[index].todo, todos[index].completed);
+                    },
                     onChanged: (bool? value) {
                       setState(() {
                         todos[index].completed = value ?? false;

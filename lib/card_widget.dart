@@ -51,8 +51,10 @@ class CardWidget extends StatelessWidget {
             Text(
               title ?? "",
               textAlign: TextAlign.center,
-              style:
-                  TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 17),
             ),
           ],
         ),

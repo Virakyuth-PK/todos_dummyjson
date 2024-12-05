@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_dummy/add_edit.dart';
 import 'package:todo_dummy/card_widget.dart';
 import 'package:todo_dummy/get_all.dart';
+import 'package:todo_dummy/single_todo.dart';
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -50,7 +51,12 @@ class _ToDoListState extends State<ToDoList> {
                   ///Button Get Single To Do
                   Expanded(
                       child: CardWidget(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SingleTodo()));
+                          },
                           svg:
                               'https://pic.onlinewebfonts.com/thumbnails/icons_427403.svg',
                           title: "Get a single ToDos",
