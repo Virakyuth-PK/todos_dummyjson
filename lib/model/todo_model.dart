@@ -1,8 +1,8 @@
 class TodoModel {
-  final int id;
-  final String todo;
+  final int? id;
+  final String? todo;
   bool completed;
-  final int userId;
+  final int? userId;
   TodoModel({
     required this.id,
     required this.todo,

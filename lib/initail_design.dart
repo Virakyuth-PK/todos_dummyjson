@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_dummy/add_edit.dart';
 import 'package:todo_dummy/card_widget.dart';
 import 'package:todo_dummy/get_all.dart';
+import 'package:todo_dummy/model/limit_skip.dart';
 import 'package:todo_dummy/single_todo.dart';
 
 class ToDoList extends StatefulWidget {
@@ -18,7 +19,8 @@ class _ToDoListState extends State<ToDoList> {
     return Scaffold(
       appBar: AppBar(
         ///title of home screen
-        title: const Text("To Do List", style: TextStyle(color: Colors.white)),
+        title: const Text("To Do List",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
         backgroundColor: Colors.blue,
       ),
 
@@ -30,16 +32,39 @@ class _ToDoListState extends State<ToDoList> {
             ///Row 1
             ///Button Get All ToDos
             Expanded(
-                child: CardWidget(
-              svg: 'https://pic.onlinewebfonts.com/thumbnails/icons_563230.svg',
-              title: "Get all TODOs",
-              color: Colors.lightBlueAccent,
-              onPressed: () {
-                //Route To 2nd Screen {Get all Screen}
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => GetAll()));
-              },
+                child: Row(
+              children: [
+                Expanded(
+                  child: CardWidget(
+                    svg:
+                        'https://www.svgrepo.com/show/532816/folder-arrow-up.svg',
+                    title: "Get all TODOs",
+                    color: Colors.black26,
+                    onPressed: () {
+                      //Route To 2nd Screen {Get all Screen}
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => GetAll()));
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                    child: CardWidget(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SingleTodo()));
+                        },
+                        svg:
+                            'https://www.svgrepo.com/show/310077/tap-single.svg',
+                        title: "Get a single ToDos",
+                        color: Colors.lightBlueAccent)),
+              ],
             )),
+
             const SizedBox(
               height: 15,
             ),
@@ -58,9 +83,9 @@ class _ToDoListState extends State<ToDoList> {
                                     builder: (context) => SingleTodo()));
                           },
                           svg:
-                              'https://pic.onlinewebfonts.com/thumbnails/icons_427403.svg',
-                          title: "Get a single ToDos",
-                          color: Colors.cyanAccent)),
+                              'https://www.svgrepo.com/show/532387/user-search.svg',
+                          title: "Get ToDos by User ID",
+                          color: Colors.greenAccent)),
                   const SizedBox(
                     width: 15,
                   ),
@@ -68,8 +93,7 @@ class _ToDoListState extends State<ToDoList> {
                   ///Button Random To Do
                   const Expanded(
                       child: CardWidget(
-                    svg:
-                        'https://pic.onlinewebfonts.com/thumbnails/icons_436231.svg',
+                    svg: 'https://www.svgrepo.com/show/391659/random.svg',
                     title: "Get a random ToDos",
                     color: Colors.greenAccent,
                   ))
@@ -87,10 +111,13 @@ class _ToDoListState extends State<ToDoList> {
                   ///Button Limit And Skip
                   Expanded(
                       child: CardWidget(
-                    svg:
-                        'https://pic.onlinewebfonts.com/thumbnails/icons_106515.svg',
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LimitSkip()));
+                    },
+                    svg: 'https://www.svgrepo.com/show/471906/skip-forward.svg',
                     title: "Limit & Skip ToDos",
-                    color: Colors.lightGreenAccent,
+                    color: Colors.limeAccent,
                   )),
                   SizedBox(
                     width: 15,
@@ -106,10 +133,9 @@ class _ToDoListState extends State<ToDoList> {
                         builder: (context) => AddEdit(),
                       );
                     },
-                    svg:
-                        'https://pic.onlinewebfonts.com/thumbnails/icons_548160.svg',
+                    svg: 'https://www.svgrepo.com/show/510788/add-to-queue.svg',
                     title: "Add a ToDos",
-                    color: Colors.amberAccent,
+                    color: Colors.limeAccent,
                   ))
                 ],
               ),

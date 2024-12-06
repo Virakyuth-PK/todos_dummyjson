@@ -70,9 +70,10 @@ class _GetAllState extends State<GetAll> {
       appBar: AppBar(
         title: const Text(
           "Get All ToDos",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         backgroundColor: Colors.lightBlueAccent.withOpacity(0.8),
+        foregroundColor: Colors.white,
       ),
       body: todos.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -92,7 +93,8 @@ class _GetAllState extends State<GetAll> {
                     todo: todos[index].todo,
                     value: todos[index].completed,
                     onPressed: () {
-                      detailScreen(todos[index].todo, todos[index].completed);
+                      detailScreen(
+                          todos[index].todo ?? "", todos[index].completed);
                     },
                     onChanged: (bool? value) {
                       setState(() {

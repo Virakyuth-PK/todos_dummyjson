@@ -27,10 +27,10 @@ class CardWidget extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: height ?? 200,
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: (color ?? Colors.blue).withOpacity(0.6),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(35),
             boxShadow: const [
               BoxShadow(
                   color: Colors.grey,
@@ -44,7 +44,7 @@ class CardWidget extends StatelessWidget {
             SvgPicture.network(
               svg ?? 'https://www.svgrepo.com/show/374674/folder.svg',
               //color: Colors.white,
-              height: 50,
+              height: 30,
             ),
 
             ///title of button
