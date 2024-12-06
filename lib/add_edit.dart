@@ -30,6 +30,7 @@ class _AddEditState extends State<AddEdit> {
     http.StreamedResponse response = await request.send();
     String responseBody = await response.stream.bytesToString();
     if (response.statusCode == 201) {
+      var jsonResponse = json.decode(responseBody);
       result = TodoModel.fromJson(jsonResponse);
     } else {
       print('Failed to add todo. Status code: ${response.statusCode}');
