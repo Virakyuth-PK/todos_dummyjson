@@ -22,6 +22,7 @@ class ScreenDetail extends StatelessWidget {
         title:
             Text("Detail about ToDos", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.lightBlueAccent,
+        foregroundColor: Colors.white,
       ),
       body: Container(
         color: Colors.white,

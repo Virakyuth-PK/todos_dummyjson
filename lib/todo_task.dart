@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_dummy/add_edit.dart';
+import 'package:todo_dummy/update.dart';
 
 class TodoTask extends StatelessWidget {
   final String? todo;
@@ -7,6 +8,8 @@ class TodoTask extends StatelessWidget {
   final bool? value;
   final Color color;
   final void Function()? onPressed;
+  final void Function()? onDelete;
+  final void Function()? onUpdate;
   TodoTask({
     super.key,
     this.todo,
@@ -14,6 +17,8 @@ class TodoTask extends StatelessWidget {
     this.onChanged,
     this.color = Colors.white,
     this.onPressed,
+    this.onDelete,
+    this.onUpdate,
   });
   void dialog(BuildContext context) {
     showDialog<String>(
@@ -118,29 +123,18 @@ class TodoTask extends StatelessWidget {
                             "Update",
                             selectionColor: Colors.lightBlueAccent,
                           ),
-                          onPressed: () {
-                            ///showing Bottom Sheet of Update To Do
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) => const AddEdit(
-                                option: "Edit To Do",
-                              ),
-                            );
-                          },
+                          onPressed: onUpdate,
                         ),
 
                         ///Delete To Do
                         MenuItemButton(
-                          leadingIcon: const Icon(Icons.delete),
-                          child: const Text(
-                            "Delete",
-                          ),
+                            leadingIcon: const Icon(Icons.delete),
+                            child: const Text(
+                              "Delete",
+                            ),
 
-                          ///Showing dialog box
-                          onPressed: () {
-                            dialog(context);
-                          },
-                        )
+                            ///Showing dialog box
+                            onPressed: onDelete)
                       ],
                     ),
                   ],

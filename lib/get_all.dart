@@ -6,6 +6,7 @@ import 'package:todo_dummy/model/todo_model.dart';
 import 'package:todo_dummy/screen_detail.dart';
 import 'package:todo_dummy/todo_task.dart';
 import 'package:http/http.dart' as http;
+import 'package:todo_dummy/update.dart';
 
 class GetAll extends StatefulWidget {
   const GetAll({super.key});
@@ -16,9 +17,12 @@ class GetAll extends StatefulWidget {
 
 class _GetAllState extends State<GetAll> {
   List<TodoModel> todos = [];
+  late TextEditingController updateController;
+  bool isSeleted = false;
   @override
   void initState() {
     super.initState();
+    updateController = TextEditingController();
     fetchToDo();
   }
 
@@ -62,6 +66,105 @@ class _GetAllState extends State<GetAll> {
     );
   }
 
+  Future<TodoModel?> deleteFetchData(int id) async {
+    TodoModel? result;
+    var request =
+        http.Request('DELETE', Uri.parse('https://dummyjson.com/todos/${id}'));
+    http.StreamedResponse response = await request.send();
+    String responseBody = await response.stream.bytesToString();
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(responseBody);
+      setState(() {
+        result = TodoModel.fromJson(jsonResponse);
+      });
+    } else {
+      print('Failed to add todo. Status code: ${response.statusCode}');
+    }
+    return result;
+  }
+
+  Future<void> onDeletedToDo(int id) async {
+    TodoModel? delete = await deleteFetchData(id);
+
+    if (delete != null) {
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                title: const Text('deleted Successed'),
+                content: Text('${delete?.todo} was deleted!'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('close'),
+                  ),
+                ],
+              ));
+    }
+  }
+
+  Future<TodoModel?> fetchUpdateData(int id) async {
+    TodoModel? result;
+    var headers = {'Content-Type': 'application/json'};
+    var request =
+        http.Request('PUT', Uri.parse('https://dummyjson.com/todos/${id}'));
+    request.body =
+        json.encode({"todo": updateController.text, "completed": false});
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    String responseBody = await response.stream.bytesToString();
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(responseBody);
+      result = TodoModel.fromJson(jsonResponse);
+    } else {
+      print('Failed to add todo. Status code: ${response.statusCode}');
+    }
+    return result;
+  }
+
+  Future<void> onUpdateToDo(int id) async {
+    TodoModel? update = await fetchUpdateData(id);
+
+    if (update != null) {
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                title: const Text('Update Successed'),
+                content: Text('${update?.todo} was Updated!'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Close'),
+                    child: const Text('Close'),
+                  ),
+                ],
+              ));
+    }
+  }
+
+  void showButtomSheet() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              height: 300,
+              child: Update(
+                updateController: updateController,
+                value: isSeleted,
+                onChanged: (value) {
+                  setState(
+                    () {
+                      isSeleted = value ?? false;
+                    },
+                  );
+                },
+              ),
+            );
+          });
+        });
+  }
+
   /// Screen get all To Do ,2nd Screen
   @override
   Widget build(BuildContext context) {
@@ -89,9 +192,17 @@ class _GetAllState extends State<GetAll> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   //return  Text("${todos.length}");
+                  updateController.text = todos[index].todo ?? "";
+                  isSeleted = todos[index].completed ?? false;
                   return TodoTask(
                     todo: todos[index].todo,
                     value: todos[index].completed,
+                    onDelete: () {
+                      onDeletedToDo(todos[index].id ?? 0);
+                    },
+                    onUpdate: () {
+                      showButtomSheet();
+                    },
                     onPressed: () {
                       detailScreen(
                           todos[index].todo ?? "", todos[index].completed);
