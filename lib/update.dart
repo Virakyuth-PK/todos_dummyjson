@@ -8,11 +8,13 @@ class Update extends StatelessWidget {
   final TextEditingController updateController;
   final bool value;
   final void Function(bool?)? onChanged;
+  final void Function()? onSave;
   const Update(
       {super.key,
       required this.updateController,
       required this.value,
-      this.onChanged});
+      this.onChanged,
+      this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -57,30 +59,31 @@ class Update extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: Container(
-                        child: TextField(
-                          controller: updateController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                          ),
+                      child: TextField(
+                        controller: updateController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
                         ),
                       ),
                     ),
-                    Checkbox(
-                      tristate: true,
-                      value: value,
-                      onChanged: onChanged,
-                      checkColor: (Colors.black),
-                      activeColor: Colors.grey[300],
-                      side: const BorderSide(width: 2, color: Colors.black),
+                    Expanded(
+                      flex: 1,
+                      child: Checkbox(
+                        tristate: true,
+                        value: value,
+                        onChanged: onChanged,
+                        checkColor: (Colors.black),
+                        activeColor: Colors.grey[300],
+                        side: const BorderSide(width: 2, color: Colors.black),
+                      ),
                     ),
                     SizedBox(
                       width: 5,
                     ),
                     Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: onSave,
                         child: Text("Save"),
                         //style: MinColumnWidth(100, 40),
                       ),

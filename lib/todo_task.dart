@@ -110,7 +110,6 @@ class TodoTask extends StatelessWidget {
                             Icons.more_vert,
                             color: Colors.black,
                           ),
-                          tooltip: 'Show menu',
                         );
                       },
 

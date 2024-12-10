@@ -1,69 +1,47 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:todo_dummy/add_edit.dart';
+import 'package:todo_dummy/initail_design.dart';
 import 'package:todo_dummy/model/todo_model.dart';
 import 'package:todo_dummy/screen_detail.dart';
 import 'package:todo_dummy/todo_task.dart';
 import 'package:http/http.dart' as http;
 import 'package:todo_dummy/update.dart';
 
-class GetAll extends StatefulWidget {
-  const GetAll({super.key});
+class GetByUserId extends StatefulWidget {
+  const GetByUserId({super.key});
 
   @override
-  State<GetAll> createState() => _GetAllState();
+  State<GetByUserId> createState() => _GetByUserIdState();
 }
 
-class _GetAllState extends State<GetAll> {
-  List<TodoModel> todos = [];
+class _GetByUserIdState extends State<GetByUserId> {
+  List<TodoModel> todoId = [];
+  bool validateUser = false;
+  TextEditingController userController = TextEditingController();
   late TextEditingController updateController;
   bool isSeleted = false;
+  TodoModel? toDo;
   @override
   void initState() {
     super.initState();
     updateController = TextEditingController();
-    fetchToDo();
+    fetchToDoByUser();
   }
 
-  Future<void> fetchToDo() async {
-    final response = await http.get(Uri.parse('https://dummyjson.com/todos'));
+  Future<void> fetchToDoByUser() async {
+    final response = await http.get(
+        Uri.parse('https://dummyjson.com/todos/user/${userController.text}'));
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = json.decode(response.body);
       List<dynamic> todosList = jsonData['todos'];
       setState(() {
-        todos = todosList.map((data) => TodoModel.fromJson(data)).toList();
+        todoId = todosList.map((data) => TodoModel.fromJson(data)).toList();
       });
     } else {
       // Handle error if needed
       print("Error data fetch");
     }
-  }
-
-  Future<void> updateStatus({int? id, bool? isComplete}) async {
-    var headers = {'Content-Type': 'application/json'};
-    var request =
-        http.Request('PUT', Uri.parse('https://dummyjson.com/todos/$id'));
-    request.body = json.encode({"completed": isComplete});
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
-    }
-  }
-
-  ///show button sheet of Detail Screen about To Do
-  void detailScreen(String todo, bool completed) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => ScreenDetail(
-        todo: todo,
-        status: completed,
-      ),
-    );
   }
 
   Future<TodoModel?> deleteFetchData(int id) async {
@@ -140,8 +118,23 @@ class _GetAllState extends State<GetAll> {
     }
   }
 
+  Future<void> updateStatus({int? id, bool? isComplete}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request =
+        http.Request('PUT', Uri.parse('https://dummyjson.com/todos/$id'));
+    request.body = json.encode({"completed": isComplete});
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   void showButtomSheet(int id, int index) {
-    isSeleted = todos[index].completed;
+    isSeleted = todoId[index].completed;
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -169,80 +162,121 @@ class _GetAllState extends State<GetAll> {
         });
   }
 
-  /// Screen get all To Do ,2nd Screen
+  void detailScreen(String todo, bool completed) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ScreenDetail(
+        todo: todo,
+        status: completed,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          "Get All ToDos",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-        ),
-        backgroundColor: Colors.lightBlueAccent.withOpacity(0.8),
+        title: Text("Get ToDos By User ID",
+            style: TextStyle(fontWeight: FontWeight.w500)),
         foregroundColor: Colors.white,
+        backgroundColor: Colors.lightBlueAccent,
       ),
-      body: todos.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: () async {
-                setState(() {
-                  todos.clear();
-                });
-                await fetchToDo();
-              },
-              child: ListView.builder(
-                itemCount: todos.length,
-                shrinkWrap: true,
+      body: Column(
+        children: [
+          Container(
+            height: 100,
+            width: double.infinity,
+            padding: EdgeInsets.all(10),
+            child: Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: TextField(
+                      controller: userController,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            validateUser = false;
+                          });
+                        }
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black)),
+                        hintText: "Input User ID (int)",
+                        errorText: validateUser ? "Value Can't Be Empty" : null,
+                        errorStyle: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          fetchToDoByUser();
+                        });
+                      },
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.lightBlueAccent,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // if (toDo == null) ...[
+          //   Container(
+          //     padding: EdgeInsets.symmetric(vertical: 200),
+          //     child: Text(
+          //       "No Data",
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   )
+          // ] else ...[
+          Expanded(
+            child: ListView.builder(
+                itemCount: todoId.length,
                 itemBuilder: (BuildContext context, int index) {
-                  //return  Text("${todos.length}");
-                  updateController.text = todos[index].todo ?? "";
+                  updateController.text = todoId[index].todo ?? "";
 
                   return TodoTask(
-                    todo: todos[index].todo,
-                    value: todos[index].completed,
+                    todo: todoId[index].todo,
+                    value: todoId[index].completed,
                     onDelete: () {
-                      onDeletedToDo(todos[index].id ?? 0);
+                      onDeletedToDo(todoId[index].id ?? 0);
                     },
                     onUpdate: () {
-                      showButtomSheet(todos[index].id ?? 0, index);
+                      showButtomSheet(todoId[index].id ?? 0, index);
                     },
                     onPressed: () {
                       detailScreen(
-                          todos[index].todo ?? "", todos[index].completed);
+                          todoId[index].todo ?? "", todoId[index].completed);
                     },
                     onChanged: (bool? value) {
                       setState(() {
-                        todos[index].completed = value ?? false;
+                        todoId[index].completed = value ?? false;
                         updateStatus(
-                            isComplete: todos[index].completed,
-                            id: todos[index].id);
+                            isComplete: todoId[index].completed,
+                            id: todoId[index].id);
                         print("value $value");
-                        print("completed ${todos[index].completed}");
+                        print("completed ${todoId[index].completed}");
                       });
                     },
                   );
-                },
-              ),
-            ),
-
-      /// Float Button Add To Do
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ///show buttom sheet of Add
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => const AddEdit(),
-          );
-        },
-        backgroundColor: Colors.lightBlueAccent,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          size: 25,
-          color: Colors.white,
-        ),
+                }),
+          )
+          // ]
+        ],
       ),
     );
   }

@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:todo_dummy/add_edit.dart';
 import 'package:todo_dummy/card_widget.dart';
 import 'package:todo_dummy/get_all.dart';
 import 'package:todo_dummy/limit_skip.dart';
-import 'package:todo_dummy/single_todo.dart';
+import 'package:todo_dummy/get_by_id.dart';
+import 'package:todo_dummy/random.dart';
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -47,21 +50,6 @@ class _ToDoListState extends State<ToDoList> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Expanded(
-                    child: CardWidget(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SingleTodo()));
-                        },
-                        svg:
-                            'https://www.svgrepo.com/show/310077/tap-single.svg',
-                        title: "Get a single ToDos",
-                        color: Colors.lightBlueAccent)),
               ],
             )),
 
@@ -80,7 +68,7 @@ class _ToDoListState extends State<ToDoList> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SingleTodo()));
+                                    builder: (context) => GetByUserId()));
                           },
                           svg:
                               'https://www.svgrepo.com/show/532387/user-search.svg',
@@ -91,8 +79,14 @@ class _ToDoListState extends State<ToDoList> {
                   ),
 
                   ///Button Random To Do
-                  const Expanded(
+                  Expanded(
                       child: CardWidget(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RandomToDo()));
+                    },
                     svg: 'https://www.svgrepo.com/show/391659/random.svg',
                     title: "Get a random ToDos",
                     color: Colors.greenAccent,
