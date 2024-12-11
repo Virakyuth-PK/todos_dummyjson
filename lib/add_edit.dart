@@ -74,7 +74,7 @@ class _AddEditState extends State<AddEdit> {
             children: [
               GestureDetector(
                 child: Container(
-                    color: Colors.lightBlueAccent,
+                    color: Colors.lightBlueAccent[100],
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 5),
                     height: 50,

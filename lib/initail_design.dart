@@ -42,7 +42,7 @@ class _ToDoListState extends State<ToDoList> {
                     svg:
                         'https://www.svgrepo.com/show/532816/folder-arrow-up.svg',
                     title: "Get all TODOs",
-                    color: Colors.lightBlueAccent,
+                    color: Colors.lightBlueAccent[100],
                     onPressed: () {
                       //Route To 2nd Screen {Get all Screen}
                       Navigator.push(context,
@@ -73,7 +73,7 @@ class _ToDoListState extends State<ToDoList> {
                           svg:
                               'https://www.svgrepo.com/show/532387/user-search.svg',
                           title: "Get ToDos by User ID",
-                          color: Colors.greenAccent)),
+                          color: Colors.greenAccent[100])),
                   const SizedBox(
                     width: 15,
                   ),
@@ -89,7 +89,7 @@ class _ToDoListState extends State<ToDoList> {
                     },
                     svg: 'https://www.svgrepo.com/show/391659/random.svg',
                     title: "Get a random ToDos",
-                    color: Colors.greenAccent,
+                    color: Colors.greenAccent[100],
                   ))
                 ],
               ),
@@ -111,7 +111,7 @@ class _ToDoListState extends State<ToDoList> {
                     },
                     svg: 'https://www.svgrepo.com/show/471906/skip-forward.svg',
                     title: "Limit & Skip ToDos",
-                    color: Colors.limeAccent,
+                    color: Colors.limeAccent[100],
                   )),
                   SizedBox(
                     width: 15,
@@ -129,7 +129,7 @@ class _ToDoListState extends State<ToDoList> {
                     },
                     svg: 'https://www.svgrepo.com/show/510788/add-to-queue.svg',
                     title: "Add a ToDos",
-                    color: Colors.limeAccent,
+                    color: Colors.limeAccent[100],
                   ))
                 ],
               ),

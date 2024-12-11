@@ -179,7 +179,7 @@ class _GetAllState extends State<GetAll> {
           "Get All ToDos",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
-        backgroundColor: Colors.lightBlueAccent.withOpacity(0.8),
+        backgroundColor: Colors.lightBlueAccent[100],
         foregroundColor: Colors.white,
       ),
       body: todos.isEmpty
@@ -236,7 +236,7 @@ class _GetAllState extends State<GetAll> {
             builder: (context) => const AddEdit(),
           );
         },
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.lightBlueAccent[100],
         shape: const CircleBorder(),
         child: const Icon(
           Icons.add,

@@ -146,6 +146,8 @@ class _LimitSkipState extends State<LimitSkip> {
 
   void showButtomSheet(int id, int index) {
     isSeleted = (toDoSkip?.todos ?? [])[index].completed;
+    updateController.text = (toDoSkip?.todos ?? [])[index].todo ?? "";
+
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -195,7 +197,7 @@ class _LimitSkipState extends State<LimitSkip> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: Colors.lightBlueAccent[100],
         ),
         body: Column(
           children: [
@@ -334,7 +336,6 @@ class _LimitSkipState extends State<LimitSkip> {
                     physics: AlwaysScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       var item = toDoSkip?.todos![index];
-                      updateController.text = item?.todo ?? "";
 
                       return TodoTask(
                         todo: item?.todo,
