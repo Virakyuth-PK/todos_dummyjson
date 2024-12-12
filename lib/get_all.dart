@@ -18,7 +18,7 @@ class GetAll extends StatefulWidget {
 class _GetAllState extends State<GetAll> {
   List<TodoModel> todos = [];
   late TextEditingController updateController;
-  bool isSeleted = false;
+  bool isSelected = false;
   @override
   void initState() {
     super.initState();
@@ -108,7 +108,7 @@ class _GetAllState extends State<GetAll> {
     var request =
         http.Request('PUT', Uri.parse('https://dummyjson.com/todos/${id}'));
     request.body =
-        json.encode({"todo": updateController.text, "completed": isSeleted});
+        json.encode({"todo": updateController.text, "completed": isSelected});
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     String responseBody = await response.stream.bytesToString();
@@ -141,7 +141,9 @@ class _GetAllState extends State<GetAll> {
   }
 
   void showButtomSheet(int id, int index) {
-    isSeleted = todos[index].completed;
+    isSelected = todos[index].completed;
+    updateController.text = todos[index].todo ?? "";
+
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -152,14 +154,15 @@ class _GetAllState extends State<GetAll> {
               height: 500,
               child: Update(
                 updateController: updateController,
-                value: isSeleted,
+                value: isSelected,
                 onSave: () {
+                  Navigator.pop(context);
                   onUpdateToDo(id);
                 },
                 onChanged: (value) {
                   setState(
                     () {
-                      isSeleted = value ?? false;
+                      isSelected = value ?? false;
                     },
                   );
                 },
@@ -196,8 +199,6 @@ class _GetAllState extends State<GetAll> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   //return  Text("${todos.length}");
-                  updateController.text = todos[index].todo ?? "";
-
                   return TodoTask(
                     todo: todos[index].todo,
                     value: todos[index].completed,

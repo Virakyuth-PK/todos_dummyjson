@@ -36,7 +36,7 @@ class CardWidget extends StatelessWidget {
                   color: Colors.grey,
                   spreadRadius: 1,
                   blurRadius: 1,
-                  offset: Offset(2, 2))
+                  offset: Offset(0, 2))
             ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

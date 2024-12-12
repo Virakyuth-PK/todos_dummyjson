@@ -135,6 +135,8 @@ class _GetByUserIdState extends State<GetByUserId> {
 
   void showButtomSheet(int id, int index) {
     isSeleted = todoId[index].completed;
+    updateController.text = todoId[index].todo ?? "";
+
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -147,6 +149,7 @@ class _GetByUserIdState extends State<GetByUserId> {
                 updateController: updateController,
                 value: isSeleted,
                 onSave: () {
+                  Navigator.pop(context);
                   onUpdateToDo(id);
                 },
                 onChanged: (value) {
@@ -221,7 +224,11 @@ class _GetByUserIdState extends State<GetByUserId> {
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          fetchToDoByUser();
+                          if (userController.text.isEmpty) {
+                            validateUser = userController.text.isEmpty;
+                          } else {
+                            fetchToDoByUser();
+                          }
                         });
                       },
                       child: Icon(
@@ -247,8 +254,6 @@ class _GetByUserIdState extends State<GetByUserId> {
             child: ListView.builder(
                 itemCount: todoId.length,
                 itemBuilder: (BuildContext context, int index) {
-                  updateController.text = todoId[index].todo ?? "";
-
                   return TodoTask(
                     todo: todoId[index].todo,
                     value: todoId[index].completed,

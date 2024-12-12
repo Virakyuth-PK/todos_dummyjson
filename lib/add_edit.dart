@@ -46,7 +46,7 @@ class _AddEditState extends State<AddEdit> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
                 title: const Text('Create Successed'),
-                content: Text('${create?.todo} was created!'),
+                content: Text('${create.todo} was created!'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -117,6 +117,13 @@ class _AddEditState extends State<AddEdit> {
                               errorStyle: TextStyle(color: Colors.red),
                               border: OutlineInputBorder(),
                               hintText: "Add To Do"),
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              setState(() {
+                                _validate = false;
+                              });
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -127,11 +134,13 @@ class _AddEditState extends State<AddEdit> {
                       flex: 1,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (taskController.text.isEmpty) {
-                            _validate = taskController.text.isEmpty;
-                          } else {
-                            OnCreateToDo();
-                          }
+                          setState(() {
+                            if (taskController.text.isEmpty) {
+                              _validate = taskController.text.isEmpty;
+                            } else {
+                              OnCreateToDo();
+                            }
+                          });
                         },
                         child: Text("Save"),
                         //style: MinColumnWidth(100, 40),

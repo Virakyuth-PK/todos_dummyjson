@@ -160,6 +160,7 @@ class _LimitSkipState extends State<LimitSkip> {
                 updateController: updateController,
                 value: isSeleted,
                 onSave: () {
+                  Navigator.pop(context);
                   onUpdateToDo(id);
                 },
                 onChanged: (value) {
