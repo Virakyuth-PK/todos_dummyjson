@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+[//]: # (Android manifest.xml   <uses-permission android:name="android.permission.INTERNET"/>    )
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
