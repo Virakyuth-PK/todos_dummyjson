@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:todo_dummy/initail_design.dart';
 import 'package:todo_dummy/model/todo_model.dart';
 import 'package:todo_dummy/screen_detail.dart';
 import 'package:todo_dummy/todo_task.dart';
@@ -185,13 +184,16 @@ class _GetByUserIdState extends State<GetByUserId> {
         foregroundColor: Colors.white,
         backgroundColor: Colors.lightBlueAccent[100],
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 100,
-            width: double.infinity,
-            padding: EdgeInsets.all(10),
-            child: Expanded(
+      body: Container(
+        color: Colors.white,
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              width: double.infinity,
+              padding: EdgeInsets.all(10),
               child: Row(
                 children: [
                   Expanded(
@@ -210,7 +212,7 @@ class _GetByUserIdState extends State<GetByUserId> {
                             borderRadius: BorderRadius.circular(5),
                             borderSide:
                                 BorderSide(width: 2, color: Colors.black)),
-                        hintText: "Input User ID (int)",
+                        hintText: "Input User ID",
                         errorText: validateUser ? "Value Can't Be Empty" : null,
                         errorStyle: TextStyle(color: Colors.red),
                       ),
@@ -240,48 +242,40 @@ class _GetByUserIdState extends State<GetByUserId> {
                 ],
               ),
             ),
-          ),
-          // if (toDo == null) ...[
-          //   Container(
-          //     padding: EdgeInsets.symmetric(vertical: 200),
-          //     child: Text(
-          //       "No Data",
-          //       textAlign: TextAlign.center,
-          //     ),
-          //   )
-          // ] else ...[
-          Expanded(
-            child: ListView.builder(
-                itemCount: todoId.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return TodoTask(
-                    todo: todoId[index].todo,
-                    value: todoId[index].completed,
-                    onDelete: () {
-                      onDeletedToDo(todoId[index].id ?? 0);
-                    },
-                    onUpdate: () {
-                      showButtomSheet(todoId[index].id ?? 0, index);
-                    },
-                    onPressed: () {
-                      detailScreen(
-                          todoId[index].todo ?? "", todoId[index].completed);
-                    },
-                    onChanged: (bool? value) {
-                      setState(() {
-                        todoId[index].completed = value ?? false;
-                        updateStatus(
-                            isComplete: todoId[index].completed,
-                            id: todoId[index].id);
-                        print("value $value");
-                        print("completed ${todoId[index].completed}");
-                      });
-                    },
-                  );
-                }),
-          )
-          // ]
-        ],
+
+            Expanded(
+              child: ListView.builder(
+                  itemCount: todoId.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TodoTask(
+                      todo: todoId[index].todo,
+                      value: todoId[index].completed,
+                      onDelete: () {
+                        onDeletedToDo(todoId[index].id ?? 0);
+                      },
+                      onUpdate: () {
+                        showButtomSheet(todoId[index].id ?? 0, index);
+                      },
+                      onPressed: () {
+                        detailScreen(
+                            todoId[index].todo ?? "", todoId[index].completed);
+                      },
+                      onChanged: (bool? value) {
+                        setState(() {
+                          todoId[index].completed = value ?? false;
+                          updateStatus(
+                              isComplete: todoId[index].completed,
+                              id: todoId[index].id);
+                          print("value $value");
+                          print("completed ${todoId[index].completed}");
+                        });
+                      },
+                    );
+                  }),
+            )
+            ]
+
+  ),
       ),
     );
   }

@@ -29,7 +29,7 @@ class RandomWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                color: Colors.black38, offset: Offset(2, 0), blurRadius: 1)
+                color: Colors.black38, offset: Offset(0, 1), blurRadius: 1)
           ]),
     );
   }

@@ -84,7 +84,7 @@ class __RandomToDoState extends State<RandomToDo> {
                         Expanded(
                           child: Container(
                             width: double.infinity,
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all( 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -98,14 +98,14 @@ class __RandomToDoState extends State<RandomToDo> {
                                   height: 10,
                                 ),
                                 Expanded(
-                                  flex: 3,
+                                  flex: 2,
                                   child: RandomWidget(
                                     title: "ToDo",
                                     value: "${result?.todo}",
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 15,
+                                  height: 10,
                                 ),
                                 Expanded(
                                     flex: 1,
@@ -114,7 +114,7 @@ class __RandomToDoState extends State<RandomToDo> {
                                       value: "${result?.completed}",
                                     )),
                                 SizedBox(
-                                  height: 15,
+                                  height: 10,
                                 ),
                                 Expanded(
                                     flex: 1,
